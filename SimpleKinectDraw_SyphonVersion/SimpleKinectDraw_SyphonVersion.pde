@@ -10,7 +10,7 @@ SyphonServer server;
 int head_size = 30;
 
 void setup() {
-  size(800, 600);
+  size(800, 600, P3D);
   oscP5 = new OscP5(this,7000);
   NI_mate_map_setup_function();
   
