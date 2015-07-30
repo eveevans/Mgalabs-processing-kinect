@@ -18,7 +18,7 @@ void setup() {
   background(0);
   //noStroke();
   
-  canvas = createGraphics(400, 400, P3D);
+  canvas = createGraphics(800, 600, P3D);
   server = new SyphonServer(this, "otro");
 }
 
