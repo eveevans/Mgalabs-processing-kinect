@@ -1,2 +1,2 @@
 # Mgalabs-processing-kinect
-Kinect Experiment witj Processing for MgaLabs
+Kinect Experiment with Processing for MgaLabs
