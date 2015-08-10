@@ -1,5 +1,5 @@
 import oscP5.*;
-int head_size = 30;
+int head_size = 20;
 
 void setup() {
   size(800, 600);
@@ -19,9 +19,17 @@ void draw() {
   stroke(255);
   noFill();
   
+  strokeWeight(8);
+  
+  // spine line
+  line(sk_head.x, sk_head.y+head_size, (sk_left_shoulder.x + sk_right_shoulder.x)/2, (sk_left_shoulder.y + sk_right_shoulder.y)/2 ) ; 
+  line(sk_torso.x, sk_torso.y, (sk_left_hip.x + sk_right_hip.x)/2 , (sk_left_hip.y + sk_right_hip.y)/2 );
+  
   //torso
-  //triangle(sk_left_shoulder.x,sk_left_shoulder.y, sk_right_shoulder.x, sk_right_shoulder.y, sk_torso.x, sk_torso.y);
-  quad(sk_left_shoulder.x,sk_left_shoulder.y, sk_left_hip.x, sk_left_hip.y, sk_right_hip.x, sk_right_hip.y, sk_right_shoulder.x, sk_right_shoulder.y);
+  fill(255,255,255,255);
+  triangle(sk_left_shoulder.x,sk_left_shoulder.y, sk_right_shoulder.x, sk_right_shoulder.y, sk_torso.x, sk_torso.y);
+  noFill();
+  //quad(sk_left_shoulder.x,sk_left_shoulder.y, sk_left_hip.x, sk_left_hip.y, sk_right_hip.x, sk_right_hip.y, sk_right_shoulder.x, sk_right_shoulder.y);
   
   //left arm
   bezier(sk_left_shoulder.x, sk_left_shoulder.y, sk_left_elbow.x,sk_left_elbow.y,sk_left_elbow.x,sk_left_elbow.y  , sk_left_hand.x,sk_left_hand.y);
@@ -36,13 +44,21 @@ void draw() {
   // right leg
   bezier(sk_right_hip.x, sk_right_hip.y, sk_right_knee.x, sk_right_knee.y, sk_right_knee.x, sk_right_knee.y, sk_right_foot.x, sk_right_foot.y);
   
-  // head
-  //float zoom = map(sk_head.z, 4,0, 1,2);
-  //scale(zoom);
-  //triangle(sk_head.x-head_size, sk_head.y-head_size, sk_head.x, sk_head.y+head_size, sk_head.x+head_size, sk_head.y-head_size);
+  // Pant
+  fill(255,255,255,255);
+  triangle(sk_left_hip.x, sk_left_hip.y, sk_right_hip.x , sk_right_hip.y, (sk_left_hip.x + sk_right_hip.x)/2, (sk_left_hip.y + sk_right_hip.y)/2 + 30);  
   
-  //print("--------------------");
-  //print(zoom);
+  // head
+  float zoom = map(sk_head.z, 4,0, 1,2);
+  fill(255,255,255,255);
+  
+  translate(sk_head.x - sk_head.x * zoom , sk_head.y - sk_head.y *zoom);  
+  scale(zoom);  
+  strokeWeight(1.0/zoom);
+  triangle(sk_head.x-head_size, sk_head.y+head_size, sk_head.x, sk_head.y-head_size, sk_head.x+head_size, sk_head.y+head_size);
+  noFill();
+  
+  
   
 }
 
