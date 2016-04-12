@@ -1,11 +1,22 @@
 import oscP5.*;
-int head_size = 20;
+
+int numFrames = 3;
+int currentFrame = 0;
+PImage[] suits = new PImage[numFrames];
 
 void setup() {
-  size(800, 600);
+  size(640, 480);
+  //frameRate(1);
+  
   NI_mate_map_setup_function();
   smooth();
   background(0);
+  
+  suits[0] = loadImage("data/suit_01.png");
+  suits[1] = loadImage("data/suit_02.png");
+  suits[2] = loadImage("data/suit_03.png");
+  
+  
   //noStroke();
 }
 
@@ -16,50 +27,25 @@ void draw() {
     ellipse(skeleton[i].x, skeleton[i].y, 5, 5);      
   }
   
-  stroke(255);
-  noFill();
+  //currentFrame = (currentFrame+1) % numFrames;
+  //image(suits[currentFrame], sk_torso.x-320, sk_torso.y-240);
   
-  strokeWeight(8);
+  //textSize(32);
+  text("Mano derecha: " + sk_right_hand.y, 10, 10); 
   
-  // spine line
-  line(sk_head.x, sk_head.y+head_size, (sk_left_shoulder.x + sk_right_shoulder.x)/2, (sk_left_shoulder.y + sk_right_shoulder.y)/2 ) ; 
-  line(sk_torso.x, sk_torso.y, (sk_left_hip.x + sk_right_hip.x)/2 , (sk_left_hip.y + sk_right_hip.y)/2 );
+  if(sk_right_hand.y > 0 && sk_right_hand.y <= 160){
+     image(suits[2], sk_torso.x-320, sk_torso.y-240);
+   }
+   else if(sk_right_hand.y > 160 && sk_right_hand.y <= 320){
+     image(suits[1], sk_torso.x-320, sk_torso.y-240);
+   }
+   else if(sk_right_hand.y >320 && sk_right_hand.y <=460 ){
+     image(suits[0], sk_torso.x-320, sk_torso.y-240);
+   }
+   else {
+   }
   
-  //torso
-  fill(255,255,255,255);
-  triangle(sk_left_shoulder.x,sk_left_shoulder.y, sk_right_shoulder.x, sk_right_shoulder.y, sk_torso.x, sk_torso.y);
-  noFill();
-  //quad(sk_left_shoulder.x,sk_left_shoulder.y, sk_left_hip.x, sk_left_hip.y, sk_right_hip.x, sk_right_hip.y, sk_right_shoulder.x, sk_right_shoulder.y);
   
-  //left arm
-  bezier(sk_left_shoulder.x, sk_left_shoulder.y, sk_left_elbow.x,sk_left_elbow.y,sk_left_elbow.x,sk_left_elbow.y  , sk_left_hand.x,sk_left_hand.y);
-  
-  //right arm
-  bezier(sk_right_shoulder.x, sk_right_shoulder.y, sk_right_elbow.x,sk_right_elbow.y,sk_right_elbow.x,sk_right_elbow.y  , sk_right_hand.x,sk_right_hand.y);
-  
-  // left leg
-  //print(sk_left_foot.x);
-  bezier(sk_left_hip.x, sk_left_hip.y, sk_left_knee.x, sk_left_knee.y, sk_left_knee.x, sk_left_knee.y,  sk_left_foot.x, sk_left_foot.y);
-  
-  // right leg
-  bezier(sk_right_hip.x, sk_right_hip.y, sk_right_knee.x, sk_right_knee.y, sk_right_knee.x, sk_right_knee.y, sk_right_foot.x, sk_right_foot.y);
-  
-  // Pant
-  fill(255,255,255,255);
-  triangle(sk_left_hip.x, sk_left_hip.y, sk_right_hip.x , sk_right_hip.y, (sk_left_hip.x + sk_right_hip.x)/2, (sk_left_hip.y + sk_right_hip.y)/2 + 30);  
-  
-  // head
-  float zoom = map(sk_head.z, 4,0, 1,2);
-  fill(255,255,255,255);
-  
-  float angle = PVector.angleBetween(sk_head, sk_left_shoulder);
-  text("Angle: " + angle, 700, 50);
-  
-  translate(sk_head.x - sk_head.x * zoom , sk_head.y - sk_head.y *zoom);  
-  scale(zoom);  
-  strokeWeight(1.0/zoom);
-  triangle(sk_head.x-head_size, sk_head.y+head_size, sk_head.x, sk_head.y-head_size, sk_head.x+head_size, sk_head.y+head_size);
-  noFill();
   
 }
 
