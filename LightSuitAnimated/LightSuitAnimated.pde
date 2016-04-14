@@ -3,6 +3,15 @@ import oscP5.*;
 int numFrames = 3;
 int currentFrame = 0;
 PImage[] suits = new PImage[numFrames];
+PImage right_arm;
+PImage left_arm;
+PImage right_leg;
+PImage left_leg;
+PImage head;
+
+// new
+PVector vtemp = new PVector(0,0,0);
+float angle;
 
 void setup() {
   size(640, 480);
@@ -14,8 +23,12 @@ void setup() {
   
   suits[0] = loadImage("data/suit_01.png");
   suits[1] = loadImage("data/suit_02.png");
-  suits[2] = loadImage("data/suit_03.png");
-  
+  suits[2] = loadImage("data/suit_full.png");
+  head = loadImage("data/head.png");
+  right_arm = loadImage("data/right_arm.png");
+  left_arm = loadImage("data/right_arm.png");
+  right_leg = loadImage("data/right_arm.png");
+  left_leg = loadImage("data/right_arm.png");
   
   //noStroke();
 }
@@ -33,19 +46,43 @@ void draw() {
   //textSize(32);
   text("Mano derecha: " + sk_right_hand.y, 10, 10); 
   
-  if(sk_right_hand.y > 0 && sk_right_hand.y <= 160){
+  if( (sk_right_hand.y > 0 && sk_right_hand.y <= 160) || ( sk_left_hand.y > 0 && sk_left_hand.y <= 160 )  ){
      image(suits[2], sk_torso.x-320, sk_torso.y-240);
    }
-   else if(sk_right_hand.y > 160 && sk_right_hand.y <= 320){
+   else if( (sk_right_hand.y > 160 && sk_right_hand.y <= 220) || (sk_left_hand.y > 160 && sk_left_hand.y <= 220) ){
      image(suits[1], sk_torso.x-320, sk_torso.y-240);
    }
-   else if(sk_right_hand.y >320 && sk_right_hand.y <=460 ){
-     image(suits[0], sk_torso.x-320, sk_torso.y-240);
-   }
    else {
+     draw_rotated_body( suits[0], sk_left_shoulder, sk_right_shoulder, sk_torso);
+     //image(suits[0], sk_torso.x-320, sk_torso.y-240);
    }
+   
+   draw_rotated_image(right_arm, sk_right_elbow, sk_right_hand);
+   draw_rotated_image(left_arm, sk_left_elbow, sk_left_hand);
+   draw_rotated_image(right_leg, sk_right_knee, sk_right_foot);
+   draw_rotated_image(left_leg, sk_left_knee, sk_left_foot);
+   draw_rotated_image(head, sk_head, sk_neck);
   
-  
+}
+
+void draw_rotated_image(PImage image_to_draw, PVector a, PVector b){
+  vtemp = PVector.sub(b,a);
+  angle = atan2(vtemp.y, vtemp.x);
+  translate(a.x, a.y);
+  rotate(angle);
+  image(image_to_draw, 0, 0);
+  rotate(-angle);
+  translate(-a.x,-a.y);
+}
+
+void draw_rotated_body(PImage image_to_draw, PVector a, PVector b, PVector center){
+  vtemp = PVector.sub(b,a);
+  angle = atan2(vtemp.y, vtemp.x);
+  translate(a.x-image_to_draw.width, a.y-image_to_draw.height);
+  rotate(angle);
+  image(image_to_draw, 0,0);
+  rotate(-angle);
+  translate(-a.x+image_to_draw.width, -a.y+image_to_draw.height);
   
 }
 
