@@ -23,7 +23,7 @@ void setup() {
   
   suits[0] = loadImage("data/suit_01.png");
   suits[1] = loadImage("data/suit_02.png");
-  suits[2] = loadImage("data/suit_full.png");
+  suits[2] = loadImage("data/suit_03.png");
   head = loadImage("data/head.png");
   right_arm = loadImage("data/right_arm.png");
   left_arm = loadImage("data/right_arm.png");
@@ -45,7 +45,15 @@ void draw() {
   
   //textSize(32);
   text("Mano derecha: " + sk_right_hand.y, 10, 10); 
-  
+
+   
+   draw_rotated_image(right_arm, sk_right_elbow, sk_right_hand);
+   draw_rotated_image(left_arm, sk_left_elbow, sk_left_hand);
+   draw_rotated_image(right_leg, sk_right_knee, sk_right_foot);
+   draw_rotated_image(left_leg, sk_left_knee, sk_left_foot);
+   draw_rotated_image(head, sk_head, sk_neck);
+   
+     
   if( (sk_right_hand.y > 0 && sk_right_hand.y <= 160) || ( sk_left_hand.y > 0 && sk_left_hand.y <= 160 )  ){
      image(suits[2], sk_torso.x-320, sk_torso.y-240);
    }
@@ -56,12 +64,6 @@ void draw() {
      draw_rotated_body( suits[0], sk_left_shoulder, sk_right_shoulder, sk_torso);
      //image(suits[0], sk_torso.x-320, sk_torso.y-240);
    }
-   
-   draw_rotated_image(right_arm, sk_right_elbow, sk_right_hand);
-   draw_rotated_image(left_arm, sk_left_elbow, sk_left_hand);
-   draw_rotated_image(right_leg, sk_right_knee, sk_right_foot);
-   draw_rotated_image(left_leg, sk_left_knee, sk_left_foot);
-   draw_rotated_image(head, sk_head, sk_neck);
   
 }
 
@@ -78,11 +80,11 @@ void draw_rotated_image(PImage image_to_draw, PVector a, PVector b){
 void draw_rotated_body(PImage image_to_draw, PVector a, PVector b, PVector center){
   vtemp = PVector.sub(b,a);
   angle = atan2(vtemp.y, vtemp.x);
-  translate(a.x-image_to_draw.width, a.y-image_to_draw.height);
+  translate(center.x, center.y);
   rotate(angle);
-  image(image_to_draw, 0,0);
-  rotate(-angle);
-  translate(-a.x+image_to_draw.width, -a.y+image_to_draw.height);
+  image(image_to_draw, -image_to_draw.width/2,-image_to_draw.height/2);
+  //rotate(-angle);
+  //translate(-a.x+image_to_draw.width/2, -a.y+image_to_draw.height/2);
   
 }
 
