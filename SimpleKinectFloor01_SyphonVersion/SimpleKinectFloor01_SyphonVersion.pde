@@ -9,28 +9,29 @@ SyphonServer server;
 
 void setup() {
   frameRate(90);
-  size(800,600, P3D);
-  oscP5 = new OscP5(this, 7000);
+  size(1024,1536, P3D);
+  oscP5 = new OscP5(this, 7001);
   
   ni_mate_setup();
   smooth();
   background(0);
   
-  canvas = createGraphics(800,600, P3D);
-  server = new SyphonServer(this, 'Piso');
+  canvas = createGraphics(1024,1536, P3D);
+  server = new SyphonServer(this, "Piso");
 }
 
 void draw() {
+  canvas.beginDraw();
   canvas.background(0);
   canvas.textSize(16);
   
   canvas.translate(width/2, 0);                    // Movido al centro de la patalla para mas facil uso de valor de x_factor 
   
   float max_x_range = 1.4;                  // Valor maximo en rango x obtenido de Kinect
-  float x_factor = (width/2)/max_x_range;   // width/2 por que se esta ocupando el centro de la pantalla  como (0,0)
+  float x_factor = (546/2)/max_x_range;   // width/2 por que se esta ocupando el centro de la pantalla  como (0,0)
   
   float max_y_range = 4.0;                  // Valor maximo obtenido de z (por que se esta ocupando el eje del piso) 
-  float y_factor = height/max_y_range;
+  float y_factor = 546/max_y_range;
   
   for(int i=0; i<group.length; i++){
     canvas.translate(-1 * width/2, 0); // para no afectar el texto con el translate
@@ -71,7 +72,7 @@ color [] colors = { color(100,255,35, 100), color(220,200,85, 100),
 color(185,65,200, 100), color(0,145,35, 100), color(245,35,200,100) };
 
 void ni_mate_setup(){
-  new OscP5(this, 7000);
+  new OscP5(this, 7001);
   group = new PVector[] { p1, p2, p3, p4, p5 };
 }
 
