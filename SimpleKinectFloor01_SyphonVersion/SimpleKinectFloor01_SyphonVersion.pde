@@ -80,15 +80,22 @@ PVector p2 = new PVector(0,0,0);
 PVector p3 = new PVector(0,0,0);
 PVector p4 = new PVector(0,0,0);
 PVector p5 = new PVector(0,0,0);
+PVector p6 = new PVector(0,0,0);
+PVector p7 = new PVector(0,0,0);
+PVector p8 = new PVector(0,0,0);
+PVector p9 = new PVector(0,0,0);
+PVector p10 = new PVector(0,0,0);
 PVector[] group;
 
 
 color [] colors = { color(100,255,35, 200), color(220,200,85, 200),
+color(185,65,200, 200), color(0,145,35, 200), color(245,35,200,200), 
+color(100,255,35, 200), color(220,200,85, 200),
 color(185,65,200, 200), color(0,145,35, 200), color(245,35,200,200) };
 
 void ni_mate_setup(){
   new OscP5(this, 7001);
-  group = new PVector[] { p1, p2, p3, p4, p5 };
+  group = new PVector[] { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 };
 }
 
 void oscEvent(OscMessage message){
@@ -97,6 +104,11 @@ void oscEvent(OscMessage message){
   if(message.checkAddrPattern("Torso_3")==true) p3.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
   if(message.checkAddrPattern("Torso_4")==true) p4.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
   if(message.checkAddrPattern("Torso_5")==true) p5.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
+  if(message.checkAddrPattern("Torso_6")==true) p6.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
+  if(message.checkAddrPattern("Torso_7")==true) p7.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
+  if(message.checkAddrPattern("Torso_8")==true) p8.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
+  if(message.checkAddrPattern("Torso_9")==true) p9.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
+  if(message.checkAddrPattern("Torso_10")==true) p10.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
 }
 
 
