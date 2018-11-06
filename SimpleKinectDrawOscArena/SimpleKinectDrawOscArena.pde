@@ -108,29 +108,29 @@ void NI_mate_map_setup_function() {
 
 void oscEvent(OscMessage message) {
   
-  if(message.checkAddrPattern("Torso")==true){
+  if(message.checkAddrPattern("Head")==true){
     float xpos = message.get(0).floatValue();
     float ypos = message.get(1).floatValue();
     float zpos = message.get(2).floatValue();
     
     //println( (zpos  - 3.0) * -1 );
     
-      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform/anchorx");
+      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform2/effect/anchorx");
       myMessage.add(xpos);
       myBundle.add(myMessage);
       myMessage.clear();
       os.send(myBundle, myRemoteLocation);
       myBundle.clear();
       
-      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform/anchory");
+      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform2/effect/anchory");
       myMessage.add(ypos);
       myBundle.add(myMessage);
       myMessage.clear();
       os.send(myBundle, myRemoteLocation);
       myBundle.clear();
       
-      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform/anchorz");
-      myMessage.add( (zpos  - 2.5) * -1);
+      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform2/effect/anchorz");
+      myMessage.add( (zpos  - 2.0) * -1);
       myBundle.add(myMessage);
       myMessage.clear();
       os.send(myBundle, myRemoteLocation);
