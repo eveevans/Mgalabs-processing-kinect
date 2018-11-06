@@ -5,16 +5,16 @@ import netP5.*;
 SyphonServer server;
 OscP5 oscP5;
 
-PVector p1 = new PVector(0,0,0);
-PVector p2 = new PVector(0,0,0);
-PVector p3 = new PVector(0,0,0);
-PVector p4 = new PVector(0,0,0);
-PVector p5 = new PVector(0,0,0);
-PVector p6 = new PVector(0,0,0);
-PVector p7 = new PVector(0,0,0);
-PVector p8 = new PVector(0,0,0);
-PVector p9 = new PVector(0,0,0);
-PVector p10 = new PVector(0,0,0);
+PVector p1 = new PVector(0.5,0.5,1);
+PVector p2 = new PVector(0.5,0.5,1);
+PVector p3 = new PVector(0.5,0.5,1);
+PVector p4 = new PVector(0.5,0.5,1);
+PVector p5 = new PVector(0.5,0.5,1);
+PVector p6 = new PVector(0.5,0.5,1);
+PVector p7 = new PVector(0.5,0.5,1);
+PVector p8 = new PVector(0.5,0.5,1);
+PVector p9 = new PVector(0.5,0.5,1);
+PVector p10 = new PVector(0.5,0.5,1);
 PVector[] group;
 
 color [] colors = { 
@@ -31,14 +31,15 @@ color [] colors = {
 };
 
 void setup() {
-  size(800,600, P3D);
+  size(1920,1080, P3D);
+  strokeWeight(4);
   server = new SyphonServer(this, "SpainSyphon");
   oscP5 = new OscP5(this, 7001);
   group = new PVector[] { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 };
 }
 
 void draw() {
-  background(127);
+  background(0,0,0,0);
  
   noFill();
   stroke(255);
@@ -46,10 +47,6 @@ void draw() {
   for(int i=0; i<group.length; i++){
     //fill(colors[i]);
       
-
-    text("p" + i + ".x: " + group[i].x , 150*i, 50);
-    text("p" + i + ".y: " + group[i].y , 150*i, 100);
-    text("p" + i + ".z: " + group[i].z , 150*i, 150);
     
     float vx = group[i].x * width;
     float vy = group[i].y * height;
@@ -58,16 +55,23 @@ void draw() {
     point(group[i].x * width, group[i].y * height, vz);
     ellipse( vx , vy , 100/group[i].z, 100/group[i].z);
     
+    line(960,540,0.5, vx, vy, vz);
+    
+    text("p" + i + ".x: " + group[i].x , vx+20, vy-20);
+    text("p" + i + ".y: " + group[i].y , vx+20, vy+0);
+    text("p" + i + ".z: " + group[i].z , vx+20, vy+20);
+    
     //stroke(colors[i]);
-    beginShape();
-    for(int l=1;l<=10;l++){
-      vertex(vx+random(100), vy+random(100));
-    }
-    endShape(CLOSE);
+    //beginShape();
+    //for(int l=1;l<=10;l++){
+     // vertex(vx+random(100), vy+random(100));
+    //}
+    //endShape(CLOSE);
     
     if(i>0){
-      if(group[i].x !=0 && group[i].z != 0)
-       line(vx, vy, vz, group[i-1].x * width, group[i-1].y * height, group[i-1].z);
+      if(group[i].x !=0 && group[i].z != 0) {
+        line(vx, vy, vz, group[i-1].x * width, group[i-1].y * height, group[i-1].z);
+      }
     }
     
   }
