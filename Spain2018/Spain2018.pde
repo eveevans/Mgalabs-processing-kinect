@@ -17,6 +17,10 @@ PVector p9 = new PVector(0.5,0.5,1);
 PVector p10 = new PVector(0.5,0.5,1);
 PVector[] group;
 
+Icosahedron ico1;
+Icosahedron ico2;
+Icosahedron ico3;
+
 Integer lastPVectorIndex = 0;
 
 color [] colors = { 
@@ -38,6 +42,9 @@ void setup() {
   server = new SyphonServer(this, "SpainSyphon");
   oscP5 = new OscP5(this, 7001);
   group = new PVector[] { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 };
+  ico1 = new Icosahedron(75);
+  ico2 = new Icosahedron(75);
+  ico3 = new Icosahedron(75);
 }
 
 void draw() {
@@ -55,7 +62,14 @@ void draw() {
     float zRadius = 100/vz;
     
     stroke(colors[i]);
-    ellipse( vx , vy , zRadius, zRadius);
+    pushMatrix();
+      translate(vx, vy, zRadius);
+      //rotateX(frameCount*PI/185);
+      //rotateY(frameCount*PI/-200);
+      ellipse( 0 , 0, zRadius, zRadius);
+      //ico1.create(zRadius);
+      //sphere(zRadius);
+    popMatrix();
     stroke(255);
     
     line(960,540,0.5, vx, vy, vz);
@@ -65,7 +79,7 @@ void draw() {
     text("p" + i + ".z: " + group[i].z , vx+zRadius, vy+20);
     
     if(i>0){
-      if(group[i].x !=0 && group[i].z != 0) {
+      if(group[i].x != 0.5 && group[i].y != 0.5 &&  group[i].z != 1) {
         line(vx, vy, vz, group[i-1].x * width, group[i-1].y * height, group[i-1].z);
         lastPVectorIndex = i;
       }
@@ -73,8 +87,8 @@ void draw() {
     
   }
   
-  //print(vectors[0]);
-  line(group[0]
+  // connect first user with last 'alive' user to close the shape
+  line(group[0].x * width, group[0].y * height, group[0].z, group[lastPVectorIndex].x * width,  group[lastPVectorIndex].y * height,  group[lastPVectorIndex].z); 
 
   server.sendScreen();
 }
