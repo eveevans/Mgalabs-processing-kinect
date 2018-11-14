@@ -17,6 +17,8 @@ PVector p9 = new PVector(0.5,0.5,1);
 PVector p10 = new PVector(0.5,0.5,1);
 PVector[] group;
 
+Integer lastPVectorIndex = 0;
+
 color [] colors = { 
   color(100,255,35, 200), 
   color(220,200,85, 200),
@@ -40,43 +42,39 @@ void setup() {
 
 void draw() {
   background(0,0,0,0);
- 
-  noFill();
+  lights();
   stroke(255);
+  noFill();
   
   for(int i=0; i<group.length; i++){
-    //fill(colors[i]);
-      
+    //fill(colors[i]);     
     
     float vx = group[i].x * width;
     float vy = group[i].y * height;
-    float vz = group[i].y; 
+    float vz = group[i].z;
+    float zRadius = 100/vz;
     
-    point(group[i].x * width, group[i].y * height, vz);
-    ellipse( vx , vy , 100/group[i].z, 100/group[i].z);
+    stroke(colors[i]);
+    ellipse( vx , vy , zRadius, zRadius);
+    stroke(255);
     
     line(960,540,0.5, vx, vy, vz);
     
-    text("p" + i + ".x: " + group[i].x , vx+20, vy-20);
-    text("p" + i + ".y: " + group[i].y , vx+20, vy+0);
-    text("p" + i + ".z: " + group[i].z , vx+20, vy+20);
-    
-    //stroke(colors[i]);
-    //beginShape();
-    //for(int l=1;l<=10;l++){
-     // vertex(vx+random(100), vy+random(100));
-    //}
-    //endShape(CLOSE);
+    text("p" + i + ".x: " + group[i].x , vx+zRadius, vy-20);
+    text("p" + i + ".y: " + group[i].y , vx+zRadius, vy+0);
+    text("p" + i + ".z: " + group[i].z , vx+zRadius, vy+20);
     
     if(i>0){
       if(group[i].x !=0 && group[i].z != 0) {
         line(vx, vy, vz, group[i-1].x * width, group[i-1].y * height, group[i-1].z);
+        lastPVectorIndex = i;
       }
     }
     
   }
   
   //print(vectors[0]);
+  line(group[0]
 
   server.sendScreen();
 }
