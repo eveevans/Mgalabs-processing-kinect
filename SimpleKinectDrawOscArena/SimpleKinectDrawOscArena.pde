@@ -115,21 +115,21 @@ void oscEvent(OscMessage message) {
     
     //println( (zpos  - 3.0) * -1 );
     
-      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform2/effect/anchorx");
+      myMessage.setAddrPattern("/composition/layers/2/video/effects/transform2/effect/anchorx");
       myMessage.add(xpos);
       myBundle.add(myMessage);
       myMessage.clear();
       os.send(myBundle, myRemoteLocation);
       myBundle.clear();
       
-      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform2/effect/anchory");
+      myMessage.setAddrPattern("/composition/layers/2/video/effects/transform2/effect/anchory");
       myMessage.add(ypos);
       myBundle.add(myMessage);
       myMessage.clear();
       os.send(myBundle, myRemoteLocation);
       myBundle.clear();
       
-      myMessage.setAddrPattern("/composition/layers/1/video/effects/transform2/effect/anchorz");
+      myMessage.setAddrPattern("/composition/layers/2/video/effects/transform2/effect/anchorz");
       myMessage.add( (zpos  - 2.0) * -1);
       myBundle.add(myMessage);
       myMessage.clear();

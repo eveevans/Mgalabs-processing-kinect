@@ -5,16 +5,16 @@ import netP5.*;
 SyphonServer server;
 OscP5 oscP5;
 
-PVector p1 = new PVector(0.5,0.5,1);
-PVector p2 = new PVector(0.5,0.5,1);
-PVector p3 = new PVector(0.5,0.5,1);
-PVector p4 = new PVector(0.5,0.5,1);
-PVector p5 = new PVector(0.5,0.5,1);
-PVector p6 = new PVector(0.5,0.5,1);
-PVector p7 = new PVector(0.5,0.5,1);
-PVector p8 = new PVector(0.5,0.5,1);
-PVector p9 = new PVector(0.5,0.5,1);
-PVector p10 = new PVector(0.5,0.5,1);
+PVector p1 = new PVector(0.5,0.26,1);
+PVector p2 = new PVector(0.5,0.26,1);
+PVector p3 = new PVector(0.5,0.26,1);
+PVector p4 = new PVector(0.5,0.26,1);
+PVector p5 = new PVector(0.5,0.26,1);
+PVector p6 = new PVector(0.5,0.26,1);
+PVector p7 = new PVector(0.5,0.26,1);
+PVector p8 = new PVector(0.5,0.26,1);
+PVector p9 = new PVector(0.5,0.26,1);
+PVector p10 = new PVector(0.5,0.26,1);
 PVector[] group;
 
 Icosahedron ico1;
@@ -54,7 +54,12 @@ void draw() {
   stroke(255);
   noFill();
   
-  ellipse(width/2, height/2, 100, 100);
+  strokeWeight(8);
+  ellipse(width/2, height/4, 100, 100);
+  ellipse(width/2, 864, 100, 100);
+  
+  strokeWeight(2);
+  line(960,280,0.5,  960,864, 0.9);
   
   for(int i=0; i<group.length; i++) {
     float vx = group[i].x * width;
@@ -62,7 +67,7 @@ void draw() {
     float vz = group[i].z;
     float zRadius = 100/vz;
     
-    if(group[i].x != 0.5 && group[i].y != 0.5 &&  group[i].z != 1) {
+    if(group[i].x != 0.5 && group[i].y != 0.2 &&  group[i].z != 1) {
       stroke(colors[i]);
       strokeWeight(4);
       color ellipseColor = color(  red(colors[i]), green(colors[i]), blue(colors[i]), alpha(colors[i]) - 50);
@@ -76,19 +81,20 @@ void draw() {
         //ico1.create(1);
         //sphere(zRadius);
       //popMatrix();
-      stroke(255);        
+      stroke(255);
       strokeWeight(2);
-      line(960,540,0.5, vx, vy, vz);
+      line(960,280,0.5, vx, vy, vz);
+      line(960,864,0.9, vx, vy, vz);
       
       textSize(16);
-      text("p" + i + ".x: " + group[i].x , vx+zRadius, vy-20);
-      text("p" + i + ".y: " + group[i].y , vx+zRadius, vy+0);
-      text("p" + i + ".z: " + group[i].z , vx+zRadius, vy+20);
+      fill(255,255,255);
+      text("x: " + group[i].x , vx+zRadius, vy-20);
+      text("y: " + group[i].y , vx+zRadius, vy+0);
+      text("z: " + group[i].z , vx+zRadius, vy+20);
     }
 
-    
     if(i>0){
-      if(group[i].x != 0.5 && group[i].y != 0.5 &&  group[i].z != 1) {
+      if(group[i].x != 0.5 && group[i].y != 0.26 &&  group[i].z != 1) {
         line(vx, vy, vz, group[i-1].x * width, group[i-1].y * height, group[i-1].z);
         lastPVectorIndex = i;
       }
@@ -103,14 +109,14 @@ void draw() {
     // restart original position (to hide when not active)
   for(int i=0; i<group.length; i++){
     if(frameCount % 100 == 0)
-      group[i].set(0.5,0.5,1);
+      group[i].set(0.5,0.26,1);
   }
   
   server.sendScreen();
 }
 
 void oscEvent(OscMessage message){
-  if(message.checkAddrPattern("Torso_1")==true) p1.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue()); 
+  if(message.checkAddrPattern("Torso_1")==true) p1.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
   if(message.checkAddrPattern("Torso_2")==true) p2.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
   if(message.checkAddrPattern("Torso_3")==true) p3.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
   if(message.checkAddrPattern("Torso_4")==true) p4.set(message.get(0).floatValue(),message.get(1).floatValue(), message.get(2).floatValue());
